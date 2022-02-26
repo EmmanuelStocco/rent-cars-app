@@ -1,9 +1,12 @@
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
+import { FlatList } from 'react-native'; 
+import { getStatusBarHeight } from 'react-native-iphone-x-helper'
                                              
 export const Container = styled.View`
     flex: 1;     
-    background-color: ${({ theme }) => theme.colors.background_primary};
+    background-color: ${({ theme }) => theme.colors.background_primary}; 
+
 `;
 
                                              
@@ -27,3 +30,10 @@ export const TotalCars = styled.Text`
     font-family: ${({ theme }) => theme.fonts.primary_400};
     color:  ${({ theme }) => theme.colors.text};
 `;
+
+export const CarList = styled(FlatList).attrs({
+   contentContainerStyle: {
+    padding: 24
+   },
+   showsVerticalScrollIndicator: false
+})` `;

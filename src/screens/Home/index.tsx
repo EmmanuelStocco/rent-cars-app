@@ -1,6 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'react-native'
 import { RFValue } from 'react-native-responsive-fontsize'
+import { getStatusBarHeight } from 'react-native-iphone-x-helper'
 
 import Logo from '../../assets/logo.svg'
 
@@ -10,7 +11,8 @@ import {
     Container,
     Header,
     TotalCars,
-    HeaderContent
+    HeaderContent,
+    CarList
 } from './styles';
                           
 export function Home(){         
@@ -23,16 +25,7 @@ export function Home(){
         },
         thumbnail: 'https://www.pngplay.com/wp-content/uploads/13/Audi-RS5-PNG-Free-File-Download.png'
     }
-
-    const carData2 = {
-        brand: 'Porche',
-        name: 'Panamera',
-        rent: {
-            period: 'Ao-dia',
-            price: 340
-        },
-        thumbnail: 'https://www.pngplay.com/wp-content/uploads/12/Porsche-PNG-Pic-Clip-Art-Background.png'
-    }
+ 
     
     
    return ( 
@@ -40,7 +33,8 @@ export function Home(){
                <StatusBar
                     barStyle='light-content'
                     backgroundColor='transparent'
-                    translucent
+                    translucent 
+                    
                />
                <Header>
                    <HeaderContent>
@@ -55,8 +49,11 @@ export function Home(){
                     </HeaderContent>
                </Header>
 
-               <Car data={carData} />
-               <Car data={carData2} />
+                <CarList
+                    data={[1,2,3, 4, 5, 6, 7]}
+                    keyExtractor={item => String(item)}
+                    renderItem={({ item }) => <Car data={carData} />}
+                /> 
            </Container>
   
       );
