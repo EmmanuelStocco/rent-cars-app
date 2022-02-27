@@ -10,7 +10,7 @@ import {
   Archivo_600SemiBold
 } from '@expo-google-fonts/archivo'
 import { ThemeProvider } from 'styled-components'
-import { SchedullingDetails } from './src/screens/SchedullingDetails'; 
+import { SchedulingComplete } from './src/screens/SchedulingComplete'; 
 import AppLoading from 'expo-app-loading';
 import theme from './src/styles/theme';
 
@@ -30,6 +30,6 @@ export default function App(){
  
   return (
     <ThemeProvider theme={theme}>
-      <SchedullingDetails /> 
+      <SchedulingComplete /> 
     </ThemeProvider>
   )}
