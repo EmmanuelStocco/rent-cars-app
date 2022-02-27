@@ -27,22 +27,9 @@ export function Home(){
     const [loading, setLoading] = useState(true)
     const navigation = useNavigation ()
 
-    const carData = {
-        brand: 'Audi',
-        name: 'RS 5 Coupe',
-        rent: {
-            period: 'Ao-dia',
-            price: 120
-        },
-        thumbnail: 'https://www.pngplay.com/wp-content/uploads/13/Audi-RS5-PNG-Free-File-Download.png'
-    }
- 
-    function handleCarDetails() {
-        navigation.dispatch(
-          CommonActions.navigate({
-            name: 'CarDetails',
-          })
-        );
+      
+    function handleCarDetails(car :CarDTO) {
+         navigation.navigate('CarDetails', { car })
       }
     
       useEffect(() => {
@@ -82,7 +69,7 @@ export function Home(){
                         data={cars}
                         keyExtractor={item => String(item.id)}
                         renderItem={({ item }) => 
-                            <Car data={item} onPress={handleCarDetails} 
+                            <Car data={item} onPress={() => handleCarDetails(item)} 
                         />}
                     /> 
                 }
