@@ -6,12 +6,8 @@ import { ImageSlider } from '../../components/ImageSlider';
 import { Acessory } from '../../components/Acessory';
 import { Button } from '../../components/Button';
 
-import speedSvg from '../../assets/speed.svg'
-import acellerationSvg from '../../assets/acceleration.svg'
-import forceSvg from '../../assets/force.svg'
-import gasolineSvg from '../../assets/gasoline.svg'
-import exchangeSvg from '../../assets/exchange.svg'
-import peopleSvg from '../../assets/people.svg'
+import speedSvg from '../../assets/speed.svg' 
+import { getAccessoryIcon } from '../../utils/getAccesoryIcon';
 
                           
 import {
@@ -80,7 +76,7 @@ export function CarDetails(){
                             <Acessory
                                  key={accessory.type}
                                  name={accessory.name} 
-                                 icon={speedSvg}/>
+                                 icon={getAccessoryIcon(accessory.type)}/>
                         ))
                     } 
                  </Acessories>
