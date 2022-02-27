@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'react-native'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { getStatusBarHeight } from 'react-native-iphone-x-helper'
 
 import Logo from '../../assets/logo.svg'
+import api from '../../services/api';
+import { CarDTO } from '../../dtos/CarDTO';
 
 import { Car } from '../../components/Car';
+import { Load } from '../../components/Load';
+
                           
 import {
     Container,
@@ -14,12 +18,14 @@ import {
     HeaderContent,
     CarList
 } from './styles';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, CommonActions  } from '@react-navigation/native';
 import { CarDetails } from '../CarDetails';
 
                           
-export function Home(){         
-    const navigation = useNavigation()
+export function Home(){     
+    const [cars, setCars] = useState<CarDTO[]>([]);    
+    const [loading, setLoading] = useState(true)
+    const navigation = useNavigation ()
 
     const carData = {
         brand: 'Audi',
@@ -31,18 +37,33 @@ export function Home(){
         thumbnail: 'https://www.pngplay.com/wp-content/uploads/13/Audi-RS5-PNG-Free-File-Download.png'
     }
  
-    function handleCarDetails(){ 
-       navigation.navigate('CarDetails')
-    }
+    function handleCarDetails() {
+        navigation.dispatch(
+          CommonActions.navigate({
+            name: 'CarDetails',
+          })
+        );
+      }
     
+      useEffect(() => {
+        async function fetchCars(){
+            try {
+                const response = await api.get('/cars');
+                setCars(response.data) 
+            } catch (error) {
+                console.log(error)
+            }  finally{
+                setLoading(false)
+            }        
+        }
+        fetchCars();
+      }, []);
     
    return ( 
            <Container>
-               <StatusBar
-                    barStyle='light-content'
+               <StatusBar 
                     backgroundColor='transparent'
-                    translucent 
-                    
+                    translucent  
                />
                <Header>
                    <HeaderContent>
@@ -56,12 +77,15 @@ export function Home(){
                     </TotalCars>
                     </HeaderContent>
                </Header>
-
-                <CarList
-                    data={[1,2,3, 4, 5, 6, 7]}
-                    keyExtractor={item => String(item)}
-                    renderItem={({ item }) => <Car data={carData} onPress={handleCarDetails} />}
-                /> 
+                { loading ? <Load /> :
+                    <CarList
+                        data={cars}
+                        keyExtractor={item => String(item.id)}
+                        renderItem={({ item }) => 
+                            <Car data={item} onPress={handleCarDetails} 
+                        />}
+                    /> 
+                }
            </Container>
   
       );

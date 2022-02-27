@@ -2,7 +2,8 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 import { FlatList } from 'react-native'; 
 import { getStatusBarHeight } from 'react-native-iphone-x-helper'
-                                             
+import { CarDTO } from '../../dtos/CarDTO';
+                                   
 export const Container = styled.View`
     flex: 1;     
     background-color: ${({ theme }) => theme.colors.background_primary}; 
@@ -36,4 +37,4 @@ export const CarList = styled(FlatList).attrs({
     padding: 24
    },
    showsVerticalScrollIndicator: false
-})` `;
+})` ` as React.ComponentType as new <CarDTO>() => FlatList<CarDTO>;
