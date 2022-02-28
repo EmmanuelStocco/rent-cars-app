@@ -75,6 +75,11 @@ export function SchedullingDetails() {
             ...dates,
         ];
 
+        await api.post('schedules_byuser', {
+            user_id: 1,
+            car,
+        })
+
         //dando put com promise no lugar do await 
         api.put(`/schedules_bycars/${car.id}`, {
             id: car.id,
