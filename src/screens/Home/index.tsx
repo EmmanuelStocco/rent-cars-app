@@ -68,7 +68,7 @@ export function Home(){
                     />
 
                     <TotalCars>
-                        Total de 12 Carros
+                        Total de {cars.length} Carros
                     </TotalCars>
                     </HeaderContent>
                </Header>
