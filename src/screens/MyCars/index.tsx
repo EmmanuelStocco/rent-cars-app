@@ -77,8 +77,8 @@ export function MyCars() {
         />
 
         <Title>
-          Escolha uma {'\n'}
-          data de inicio e  {'\n'}
+          Confira suas {'\n'}
+          datas de inicio e  {'\n'}
           fim do alugel
         </Title>
 

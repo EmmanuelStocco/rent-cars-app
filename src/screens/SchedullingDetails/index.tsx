@@ -4,7 +4,7 @@ import { Feather } from '@expo/vector-icons'
 import { BackButton } from '../../components/BackButton';
 import { ImageSlider } from '../../components/ImageSlider';
 import { Acessory } from '../../components/Acessory';
-import { Button } from '../../components/Button'; 
+import { Button } from '../../components/Button';
 
 import {
     Container,
@@ -57,7 +57,7 @@ interface RentalPeriod {
 
 export function SchedullingDetails() {
     const [rentalPeriod, setRentalPeriod] = useState<RentalPeriod>({} as RentalPeriod)
-
+    const [loading, setLoading] = useState(false);
     const theme = useTheme();
     const navigation = useNavigation()
     const route = useRoute();
@@ -75,11 +75,13 @@ export function SchedullingDetails() {
             ...dates,
         ];
 
+        setLoading(true)
+
         await api.post('schedules_byuser', {
             user_id: 1,
             car,
             startDate: format(getPlatformDate(new Date(dates[0])), 'dd/MM/yyyy'),
-            endDate: format(getPlatformDate(new Date(dates[dates.length -1])), 'dd/MM/yyy')
+            endDate: format(getPlatformDate(new Date(dates[dates.length - 1])), 'dd/MM/yyy')
         })
 
         //dando put com promise no lugar do await 
@@ -87,10 +89,11 @@ export function SchedullingDetails() {
             id: car.id,
             unavailable_dates
         })
-        .then(response => navigation.navigate('SchedulingComplete'))
-        .catch(() => Alert.alert('Não foi possivel finalizar o angendamento'))
-
-        
+            .then(() => navigation.navigate('SchedulingComplete'))
+            .catch(() => {
+                setLoading(false);
+                Alert.alert('Não foi possivel finalizar o angendamento' )
+            })
     }
 
     function handleReturn() {
@@ -100,7 +103,7 @@ export function SchedullingDetails() {
     useEffect(() => {
         setRentalPeriod({
             start: format(getPlatformDate(new Date(dates[0])), 'dd/MM/yyyy'),
-            end: format(getPlatformDate(new Date(dates[dates.length -1])), 'dd/MM/yyy')
+            end: format(getPlatformDate(new Date(dates[dates.length - 1])), 'dd/MM/yyy')
         })
     }, [])
 
@@ -174,7 +177,13 @@ export function SchedullingDetails() {
             </Content>
 
             <Footer>
-                <Button title='Alugar agora' color={theme.colors.success} onPress={handleConfirmRental} />
+                <Button
+                    title='Alugar agora'
+                    color={theme.colors.success}
+                    onPress={handleConfirmRental}
+                    enabled={!loading}
+                    loading={loading}
+                />
             </Footer>
 
         </Container>
