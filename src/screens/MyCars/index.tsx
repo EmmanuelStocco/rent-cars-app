@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { StatusBar, FlatList } from 'react-native';
 import { BackButton } from '../../components/BackButton';
 import { CarDTO } from '../../dtos/CarDTO';
+
+import { Load } from '../../components/Load';
+import { AntDesign } from '@expo/vector-icons'
 import api from '../../services/api';
 import { NavigationRouteContext, useNavigation, useRoute } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
@@ -15,6 +18,11 @@ import {
   Appointments,
   AppointmentsTitle,
   AppointmentsQuantity,
+  CarWapper,
+  CarFooter,
+  CarFooterTitle,
+  CarFooterPeriod,
+  CarFooterDate,
 } from './styles';
 import { Car } from '../../components/Car';
 
@@ -22,6 +30,8 @@ interface CarProps {
   car: CarDTO;
   id: string;
   user_id: string;
+  startDate: string;
+  endDate: string;
 }
 
 export function MyCars() {
@@ -77,23 +87,41 @@ export function MyCars() {
         </SubTitle>
 
       </Header>
+      {loading ? <Load /> :
+        <Content>
+          <Appointments>
+            <AppointmentsTitle> Agendamentos feitos </AppointmentsTitle>
+            <AppointmentsQuantity> {cars.length} </AppointmentsQuantity>
+          </Appointments>
 
-      <Content>
-        <Appointments>
-          <AppointmentsTitle> Agendamentos feitos </AppointmentsTitle>
-          <AppointmentsQuantity> 05 </AppointmentsQuantity> 
-        </Appointments>
-
-        <FlatList
+          <FlatList
             data={cars}
             keyExtractor={items => items.id}
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => (
-              
-              <Car data={item.car} />)}
-        />
 
-      </Content>
+              <CarWapper>
+                <Car data={item.car} />
+                <CarFooter>
+                  <CarFooterTitle> Periodo </CarFooterTitle>
+                  <CarFooterPeriod>
+                    <CarFooterDate> {item.startDate} </CarFooterDate>
+                    <AntDesign
+                      name='arrowright'
+                      size={20}
+                      color={theme.colors.title}
+                      style={{ marginHorizontal: 10 }}
+                    />
+                    <CarFooterDate>{item.endDate} </CarFooterDate>
+                  </CarFooterPeriod>
+                </CarFooter>
+              </CarWapper>
+
+            )}
+          />
+
+        </Content>
+      }
     </Container>
 
   );
