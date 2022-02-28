@@ -13,7 +13,7 @@
 <br>
 
 <p align="center">
-  <img alt="Moveit" src=".github/rentx-preview">
+  <img alt="Moveit" src=".github/rentx-preview.png">
 </p>
 
 ---
