@@ -28,7 +28,7 @@ import { useTheme } from 'styled-components';
 export function Home(){     
     const [cars, setCars] = useState<CarDTO[]>([]);    
     const [loading, setLoading] = useState(true)
-    const navigation = useNavigation ()
+    const navigation = useNavigation<any>()
     const theme = useTheme();
       
     function handleCarDetails(car :CarDTO) {

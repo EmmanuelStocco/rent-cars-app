@@ -59,7 +59,7 @@ export function SchedullingDetails() {
     const [rentalPeriod, setRentalPeriod] = useState<RentalPeriod>({} as RentalPeriod)
     const [loading, setLoading] = useState(false);
     const theme = useTheme();
-    const navigation = useNavigation()
+    const navigation = useNavigation<any>()
     const route = useRoute();
     const { car, dates } = route.params as Params;
 

@@ -18,7 +18,7 @@ import {
                           
 export function SchedulingComplete(){
    const { width } = useWindowDimensions();       
-   const navigation = useNavigation();
+   const navigation = useNavigation<any>();
 
    function handleConfirm(){
     navigation.navigate('Home')
@@ -38,9 +38,9 @@ export function SchedulingComplete(){
                 <Title> Carro Alugado! </Title>
 
                 <Message>
-                    Lorem, ipsum dolor sit amet {'\n'} 
-                    consectetur adipisicing elit. {'\n'}
-                    Dolorum quasi dicta, quia 
+                    Parabéns! o seu carro foi {'\n'} 
+                    alugado com sucesso. Desejamos {'\n'}
+                    que você aproveite o melhor! 
                 </Message>
             </Content>
 

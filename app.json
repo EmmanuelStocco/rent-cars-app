@@ -3,9 +3,13 @@
     "name": "rentx",
     "slug": "rentx",
     "version": "1.0.0",
+    "icon": "icon.png",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "android": {
+      "package": "com.emmanuel_stocco.rentx"
+    }
   },
   "name": "rentx"
 }
