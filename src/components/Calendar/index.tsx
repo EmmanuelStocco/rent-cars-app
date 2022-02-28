@@ -1,28 +1,46 @@
 import React from 'react';
-                          
-//renomeando o calendario
-import {Calendar as CustomCalendar,
-    LocaleConfig
-} from 'react-native-calendars';
-import {Feather} from '@expo/vector-icons'
-import { useTheme } from 'styled-components';                          
+import { ptBR } from './localeConfig'; 
+
+import {
+    Calendar as CustomCalendar,
+       LocaleConfig,  
+} from 'react-native-calendars'
+
+import { Feather } from '@expo/vector-icons'
+import { useTheme } from 'styled-components';
 import theme from '../../styles/theme';
-
-LocaleConfig.locales['pt-br'] = {
-    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Stembro', 'Outubro', 'Novebro', 'Dezembro'],
-    monthNameShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado'],
-    dayNamesShort: ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB'],
-    today: 'Hoje'
-}
-
+import { generateInterval} from './generateInterval'
+ 
+LocaleConfig.locales['pt-br'] = ptBR
 LocaleConfig.defaultLocale = 'pt-br';
 
-export function Calendar(){
-                          
-   return ( 
-           <CustomCalendar
-            renderArrow={( direction ) =>
+interface MarkedDateProps {
+    [date: string]: {
+        color: string;
+        textColor: string;
+        disabled?: boolean;
+        disableTouchEvent?: boolean;
+    },
+}
+
+interface CalendarProps {
+    markedDates: MarkedDateProps;
+    onDayPress: any;
+}
+
+interface DayProps {
+    dateString: string;
+    day: number;
+    month: number;
+    year: number;
+    timestamp: number;
+}
+
+ function Calendar({ markedDates, onDayPress } :CalendarProps) {
+
+    return (
+        <CustomCalendar
+            renderArrow={(direction) =>
                 <Feather
                     size={24}
                     color={theme.colors.shape}
@@ -51,6 +69,16 @@ export function Calendar(){
 
             firstDay={1}
             minDate={new Date()}
-            />
-      ); 
-    }
+            markingType="period"
+            markedDates={markedDates}
+            onDayPress={onDayPress}
+        />
+    );
+}
+
+export {
+    Calendar,
+    MarkedDateProps,
+    DayProps,
+    generateInterval
+}
