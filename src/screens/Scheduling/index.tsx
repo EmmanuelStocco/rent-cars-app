@@ -4,7 +4,7 @@ import { useTheme } from 'styled-components';
 import { StyleSheet, Text, View } from 'react-native';
 import { BackButton } from '../../components/BackButton';
 import { StatusBar } from 'react-native';
-import { Calendar, DayProps, generateInterval, MarkedDateProps } from '../../components/Calendar';
+import { Calendar, DayProps, generateInterval, MarkedDatesProps } from '../../components/Calendar';
 import { Button } from '../../components/Button';
 
 import ArrowSvg from '../../assets/arrow.svg'
@@ -26,7 +26,7 @@ import { NavigationRouteContext, useNavigation } from '@react-navigation/native'
                           
 export function Scheduling(){
     const [lastSelectedDate, setLastSelectedDate] = useState<DayProps>({} as DayProps);
-    const [markedDates, setMarkedDates] = useState<MarkedDateProps>({} as MarkedDateProps)
+    const [markedDates, setMarkedDates] = useState<MarkedDatesProps>({} as MarkedDatesProps)
     const theme = useTheme();
     const navigation = useNavigation()
 
@@ -38,18 +38,19 @@ export function Scheduling(){
         navigation.goBack()
     }
 
-    function handleChangeDate (date :DayProps){
+    function handleChangeDate(date: DayProps) {
         let start = !lastSelectedDate.timestamp ? date : lastSelectedDate;
         let end = date;
 
-        if(start.timestamp > end.timestamp){
-            start = end
-            end=start
+        if (start.timestamp > end.timestamp) {
+            start = end;
+            end = start;
         }
 
-        setLastSelectedDate(end)
-        const interval = generateInterval(start, end)
+        setLastSelectedDate(end);
+        const interval = generateInterval(start, end);
         setMarkedDates(interval);
+        
     }   
                           
    return (
